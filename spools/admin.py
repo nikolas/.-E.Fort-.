@@ -4,6 +4,7 @@ from spools.models import Thumper, Spool, SidebarItem
 
 class ThumperInline(admin.TabularInline):
     model = Thumper
+    extra = 1
 
 
 class SidebarItemAdmin(admin.ModelAdmin):
@@ -15,7 +16,7 @@ class SpoolAdmin(admin.ModelAdmin):
         (None, {'fields': ['subject']})
     ]
     inlines = [ThumperInline]
-    list_display = ['subject']
+    list_display = ['subject', 'created_at']
     search_fields = ['subject']
 
 

@@ -16,10 +16,10 @@ class SidebarItemViewTests(TestCase):
         self.assertContains(response, "My item!")
 
 
-def create_thumper(content_text, image):
+def create_thumper(content, image):
     return Thumper.objects.create(
         spool=Spool.objects.create(),
-        content_text=content_text,
+        content=content,
         image=image
     )
 
@@ -68,7 +68,7 @@ class SpoolMethodTests(TestCase):
         A spool with at least one valid thumper is valid.
         """
         spool = Spool.objects.create()
-        spool.thumper_set.add(Thumper.objects.create(spool=spool, content_text='hello :P'))
+        spool.thumper_set.add(Thumper.objects.create(spool=spool, content='hello :P'))
         self.assertTrue(spool.is_valid())
 
 class SpoolViewTests(TestCase):
