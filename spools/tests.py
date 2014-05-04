@@ -46,6 +46,30 @@ class ThumperMethodTests(TestCase):
         self.assertTrue(full_thumper.is_valid())
 
 
+class SpoolMethodTests(TestCase):
+
+    def test_empty_spool(self):
+        """
+        A spool without any thumpers is not valid.
+        """
+        spool = Spool.objects.create()
+        self.assertFalse(spool.is_valid())
+
+    def test_invalid_spool(self):
+        """
+        A spool only invalid thumpers is invalid.
+        """
+        spool = Spool.objects.create()
+        spool.thumper_set.add(Thumper.objects.create(spool=spool))
+        self.assertFalse(spool.is_valid())
+
+    def test_valid_spool(self):
+        """
+        A spool with at least one valid thumper is valid.
+        """
+        spool = Spool.objects.create()
+        self.assertFalse(spool.is_valid())
+
 class SpoolViewTests(TestCase):
 
     def test_index_view_with_no_polls(self):

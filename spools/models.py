@@ -7,6 +7,10 @@ class Spool(models.Model):
     def __unicode__(self):
         return self.subject
 
+    def is_valid(self):
+        return (self.thumper_set.count() > 0) and \
+            True in [_.is_valid() for _ in self.thumper_set.all()]
+
 
 class SidebarItem(models.Model):
     content = models.CharField(max_length=200)
