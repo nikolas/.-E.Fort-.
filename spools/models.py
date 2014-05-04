@@ -18,3 +18,6 @@ class Thumper(models.Model):
 
     def __unicode__(self):
         return self.content_text
+
+    def is_valid(self):
+        return not (self.content_text == '' and self.image == '')
