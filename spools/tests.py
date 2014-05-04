@@ -14,13 +14,23 @@ class ThumperMethodTests(TestCase):
 
     def test_empty_thumper(self):
         """
-        If the thumper has no spools, raise an exception.
+        A thumper without image or text is invalid.
         """
-        full_thumper = create_thumper('hi', 'image.jpg')
-        self.assertTrue(full_thumper.is_valid())
-
         empty_thumper = create_thumper('', '')
         self.assertFalse(empty_thumper.is_valid())
+
+    def test_full_thumper(self):
+        """
+        A thumper with text or an image is valid
+        """
+        text_thumper = create_thumper('hi', '')
+        self.assertTrue(text_thumper.is_valid())
+
+        image_thumper = create_thumper('', 'image.jpg')
+        self.assertTrue(image_thumper.is_valid())
+
+        full_thumper = create_thumper('hi', 'image.jpg')
+        self.assertTrue(full_thumper.is_valid())
 
 class SpoolViewTests(TestCase):
 

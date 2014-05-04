@@ -20,4 +20,4 @@ class Thumper(models.Model):
         return self.content_text
 
     def is_valid(self):
-        return not (self.content_text == '' and self.image == '')
+        return not (not self.content_text and not self.image)
