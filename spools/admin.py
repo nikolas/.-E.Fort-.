@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from tents.models import Thumper, Spool
+from spools.models import Thumper, Spool
 
 class ThumperInline(admin.TabularInline):
     model = Thumper

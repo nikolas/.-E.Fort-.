@@ -2,6 +2,7 @@ from django.db import models
 
 class Spool(models.Model):
     subject = models.CharField(blank=True, max_length=200)
+    created_at = models.DateTimeField(auto_now_add=True)
 
     def __unicode__(self):
         return self.subject
