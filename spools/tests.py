@@ -1,7 +1,20 @@
 from django.core.urlresolvers import reverse
 from django.test import TestCase
 
-from spools.models import Spool, Thumper
+from spools.models import SidebarItem, Spool, Thumper
+
+
+class SidebarItemViewTests(TestCase):
+
+    def test_sidebar_item_displays_on_index(self):
+        """
+        When an admin adds a sidebar item, it renders on the page.
+        """
+        SidebarItem.objects.create(content="My item!")
+        response = self.client.get(reverse('spools:index'))
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "My item!")
+
 
 def create_thumper(content_text, image):
     return Thumper.objects.create(
@@ -31,6 +44,7 @@ class ThumperMethodTests(TestCase):
 
         full_thumper = create_thumper('hi', 'image.jpg')
         self.assertTrue(full_thumper.is_valid())
+
 
 class SpoolViewTests(TestCase):
 

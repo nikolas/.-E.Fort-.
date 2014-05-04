@@ -8,6 +8,14 @@ class Spool(models.Model):
         return self.subject
 
 
+class SidebarItem(models.Model):
+    content = models.CharField(max_length=200)
+    position = models.IntegerField(default=0, unique=True)
+
+    def __unicode__(self):
+        return self.content
+
+
 class Thumper(models.Model):
     spool = models.ForeignKey(Spool)
     created_at = models.DateTimeField(auto_now_add=True)

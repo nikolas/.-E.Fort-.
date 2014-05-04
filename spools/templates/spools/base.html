@@ -9,17 +9,16 @@
   <link rel="stylesheet" type="text/css" href="{% static 'spools/style.css' %}" />
 </head>
 <body>
+
+  {% if sidebar_items_list %}
   <div id="sidebar">
-    {% block sidebar %}
-    <ul>
-      <li><a href="/">Home</a></li>
-      <li><a style="font-size:200%;" href="{% url 'spools:index' %}">S</a></li>
-      <li><a style="font-size:300%;" href="/mix/">?</a></li>
-    </ul>
-    {% endblock %}
+    {% include "spools/sidebar.html" %}
   </div>
+  {% endif %}
+
   <div id="content">
     {% block content %}{% endblock %}
   </div>
+
 </body>
 </html>
