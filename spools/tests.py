@@ -68,7 +68,8 @@ class SpoolMethodTests(TestCase):
         A spool with at least one valid thumper is valid.
         """
         spool = Spool.objects.create()
-        self.assertFalse(spool.is_valid())
+        spool.thumper_set.add(Thumper.objects.create(spool=spool, content_text='hello :P'))
+        self.assertTrue(spool.is_valid())
 
 class SpoolViewTests(TestCase):
 
