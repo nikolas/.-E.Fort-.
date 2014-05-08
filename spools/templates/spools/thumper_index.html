@@ -1,0 +1,21 @@
+{% extends "spools/base.html" %}
+
+{% block content %}
+<div class="new-thumper">
+  {% include "spools/thumper_form.html" %}
+</div>
+
+{% if latest_thumper_list %}
+<ul>
+  {% for thumper in latest_thumper_list %}
+  <li>
+    {% include "spools/thumper_widget.html" %}
+
+    <a href="{% url 'spools:detail' thumper.id %}">{{ thumper.id }}</a>
+  </li>
+  {% endfor %}
+</ul>
+{% else %}
+<p>No thumpers.</p>
+{% endif %}
+{% endblock %}

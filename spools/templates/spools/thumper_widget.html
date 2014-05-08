@@ -1,0 +1,11 @@
+{% if thumper.content %}
+<div class="content">{{ thumper.content }}</div>
+{% endif %}
+
+{% if thumper.image %}
+<img src="{{ thumper.image }}" />
+{% endif %}
+
+{% if thumper.author %}
+<div class="author">{{ thumper.author }}</div>
+{% endif %}

@@ -1,7 +1,7 @@
 from django.core.urlresolvers import reverse
 from django.test import TestCase
 
-from spools.models import SidebarItem, Spool, Thumper
+from spools.models import SidebarItem, Thumper
 
 
 class SidebarItemViewTests(TestCase):
@@ -16,79 +16,47 @@ class SidebarItemViewTests(TestCase):
         self.assertContains(response, "My item!")
 
 
-def create_thumper(content, image):
-    return Thumper.objects.create(
-        spool=Spool.objects.create(),
-        content=content,
-        image=image
-    )
-
 class ThumperMethodTests(TestCase):
 
     def test_empty_thumper(self):
         """
         A thumper without image or text is invalid.
         """
-        empty_thumper = create_thumper('', '')
+        empty_thumper = Thumper.objects.create(content='', image='')
         self.assertFalse(empty_thumper.is_valid())
 
     def test_full_thumper(self):
         """
         A thumper with text or an image is valid
         """
-        text_thumper = create_thumper('hi', '')
+        text_thumper = Thumper.objects.create(content='hi', image='')
         self.assertTrue(text_thumper.is_valid())
 
-        image_thumper = create_thumper('', 'image.jpg')
+        image_thumper = Thumper.objects.create(content='', image='image.jpg')
         self.assertTrue(image_thumper.is_valid())
 
-        full_thumper = create_thumper('hi', 'image.jpg')
+        full_thumper = Thumper.objects.create(content='hi', image='image.jpg')
         self.assertTrue(full_thumper.is_valid())
 
 
-class SpoolMethodTests(TestCase):
+class ThumperViewTests(TestCase):
 
-    def test_empty_spool(self):
+    def test_index_view_with_no_thumpers(self):
         """
-        A spool without any thumpers is not valid.
-        """
-        spool = Spool.objects.create()
-        self.assertFalse(spool.is_valid())
-
-    def test_invalid_spool(self):
-        """
-        A spool only invalid thumpers is invalid.
-        """
-        spool = Spool.objects.create()
-        spool.thumper_set.add(Thumper.objects.create(spool=spool))
-        self.assertFalse(spool.is_valid())
-
-    def test_valid_spool(self):
-        """
-        A spool with at least one valid thumper is valid.
-        """
-        spool = Spool.objects.create()
-        spool.thumper_set.add(Thumper.objects.create(spool=spool, content='hello :P'))
-        self.assertTrue(spool.is_valid())
-
-class SpoolViewTests(TestCase):
-
-    def test_index_view_with_no_polls(self):
-        """
-        If no spools exist, an appropriate message should be displayed.
+        If no thumpers exist, an appropriate message should be displayed.
         """
         response = self.client.get(reverse('spools:index'))
         self.assertEqual(response.status_code, 200)
-        self.assertContains(response, "No spools.")
-        self.assertQuerysetEqual(response.context['latest_spool_list'], [])
+        self.assertContains(response, "No thumpers.")
+        self.assertQuerysetEqual(response.context['latest_thumper_list'], [])
 
-    def test_index_view_with_a_spool(self):
+    def test_index_view_with_a_thumper(self):
         """
-        Spools should be displayed on the index page.
+        Thumpers should be displayed on the index page.
         """
-        Spool.objects.create(subject="Hello")
+        Thumper.objects.create(content="Hello")
         response = self.client.get(reverse('spools:index'))
         self.assertQuerysetEqual(
-            response.context['latest_spool_list'],
-            ['<Spool: Hello>']
+            response.context['latest_thumper_list'],
+            ['<Thumper: Hello>']
         )
