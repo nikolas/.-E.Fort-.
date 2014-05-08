@@ -6,4 +6,5 @@ admin.autodiscover()
 urlpatterns = patterns('',
     url(r'^spools/', include('spools.urls', namespace="spools")),
     url(r'^admin/', include(admin.site.urls)),
+    url(r'^$', include('spools.urls', namespace="spools")),
 )
