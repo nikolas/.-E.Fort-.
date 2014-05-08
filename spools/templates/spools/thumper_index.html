@@ -9,10 +9,11 @@
 <ul>
   {% for thumper in latest_thumper_list %}
   <li>
-    {% include "spools/thumper_widget.html" %}
+    {% include "spools/_thumper.html" %}
 
     <a href="{% url 'spools:detail' thumper.id %}">{{ thumper.id }}</a>
   </li>
+  <hr />
   {% endfor %}
 </ul>
 {% else %}

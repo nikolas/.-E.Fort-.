@@ -22,10 +22,8 @@ class IndexView(generic.ListView):
             thumper_form = ThumperForm(request.POST)
             if thumper_form.is_valid():
                 new_thumper = thumper_form.save()
-                url = new_thumper.get_absolute_url()
-                return HttpResponseRedirect(url)
-            else:
-                return HttpResponseRedirect(request.path)
+
+            return HttpResponseRedirect(request.path)
 
         return super(IndexView, self).dispatch(request, *args, **kwargs)
 

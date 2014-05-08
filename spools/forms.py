@@ -10,6 +10,5 @@ class ThumperForm(forms.ModelForm):
     def clean(self):
         cleaned_data = super(ThumperForm, self).clean()
         if (not cleaned_data['content'] and not cleaned_data['image']):
-            print 'aaa'
             raise forms.ValidationError("Form has no content.")
         return cleaned_data
